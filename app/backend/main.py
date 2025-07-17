@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -30,7 +30,6 @@ def get_db():
 # Item routes
 @app.get("/api/items", response_model=List[Item])
 def list_items(db: Session = Depends(get_db)):
-    print("moi")
     return item_crud.get_items(db)
 
 
@@ -85,10 +84,13 @@ def delete_calendar_event(event_id: int, db: Session = Depends(get_db)):
 
 
 # Mount the static files
-app.mount("/", StaticFiles(directory="dist", html=True), name="frontend")
+app.mount("/assets", StaticFiles(directory="dist/assets"), name="assets")
 
 
-# Create a root route to serve index.html
-@app.get("/")
-async def root():
-    return FileResponse(os.path.join("dist", "index.html"))
+# Catch-all route to serve the React index.html file. This allows React Router to handle all the frontend routing.
+@app.get("/{full_path:path}", response_class=FileResponse)
+async def serve_react_app(full_path: str):
+    index_path = os.path.join("dist", "index.html")
+    if not os.path.exists(index_path):
+        raise HTTPException(status_code=404, detail="Frontend entry point not found")
+    return FileResponse(index_path)

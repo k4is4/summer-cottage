@@ -31,7 +31,6 @@ const ItemList: React.FC = () => {
 		setIsLoading(true);
 		try {
 			const fetchedItems: Item[] = await itemService.getItems();
-			console.log("Fetched items:", fetchedItems);
 			setItems(fetchedItems);
 		} catch (e) {
 			console.error("Error fetching items:", e);

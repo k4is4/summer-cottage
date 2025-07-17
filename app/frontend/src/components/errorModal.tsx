@@ -13,7 +13,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ errorMessage, onClose }) => {
 	return (
 		<Modal show={true} onHide={closeHandler}>
 			<Modal.Header closeButton>
-				<Modal.Title>Oho! Jotain meni vikaan</Modal.Title>
+				<Modal.Title>Odottamaton virhe</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>{errorMessage}</Modal.Body>
 			<Modal.Footer>
