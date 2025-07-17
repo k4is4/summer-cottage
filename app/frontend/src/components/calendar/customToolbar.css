@@ -1,0 +1,9 @@
+.toolbar-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.toolbar-label {
+	margin: 0 10px;
+}

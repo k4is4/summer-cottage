@@ -1,0 +1,31 @@
+.edit-icon {
+	color: green;
+	cursor: pointer;
+}
+
+.delete-icon {
+	color: green;
+	cursor: pointer;
+}
+
+.table thead th div {
+	margin-bottom: 10px;
+}
+
+.table thead th {
+	color: rgb(128, 126, 126);
+}
+
+.comment-input {
+	border: none;
+}
+
+@media screen and (max-width: 768px) {
+	.comment-input {
+		width: 100%;
+	}
+}
+
+.spinner {
+	margin-top: 5%;
+}
