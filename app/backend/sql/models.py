@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -14,15 +12,15 @@ class ItemModel(Base):
     status = Column(Integer, nullable=False)
     comment = Column(String(100), nullable=True)
     category = Column(Integer, nullable=False)
-    updated_on = Column(DateTime, default=datetime.utcnow)
+    updated_on = Column(DateTime, nullable=False)
 
 
 class CalendarEventModel(Base):
     __tablename__ = "calendar_events"
 
     id = Column(Integer, primary_key=True, index=True)
-    start_date = Column(DateTime, nullable=False)
-    end_date = Column(DateTime, nullable=False)
+    start_date = Column(DateTime(timezone=True), nullable=False)
+    end_date = Column(DateTime(timezone=True), nullable=False)
     note = Column(String(200), nullable=False)
     color = Column(Integer, nullable=False)
-    updated_on = Column(DateTime, nullable=False)
+    updated_on = Column(DateTime(timezone=True), nullable=False)

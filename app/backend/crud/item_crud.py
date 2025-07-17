@@ -1,3 +1,4 @@
+from zoneinfo import ZoneInfo
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from datetime import datetime, timedelta
@@ -42,9 +43,9 @@ def update_item(db: Session, item_id: int, item_data: Item):
         )
 
     # Update fields
-    for attr, value in item_data.dict().items():
+    for attr, value in item_data.model_dump(exclude_unset=True).items():
         setattr(existing_item, attr, value)
-    existing_item.updated_on = datetime.utcnow() + timedelta(hours=3)
+    existing_item.updated_on = datetime.now(ZoneInfo("Europe/Helsinki"))
 
     db.commit()
     db.refresh(existing_item)
@@ -58,8 +59,8 @@ def add_item(db: Session, item_data: Item):
             status_code=409, detail=f"Item with name '{item_data.name}' already exists"
         )
 
-    new_item = ItemModel(**item_data.dict())
-    new_item.updated_on = datetime.utcnow() + timedelta(hours=3)
+    now = datetime.now(ZoneInfo("Europe/Helsinki"))
+    new_item = ItemModel(**item_data.model_dump(exclude_unset=True), updated_on=now)
 
     db.add(new_item)
     db.commit()

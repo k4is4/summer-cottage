@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class Item(BaseModel):
-    id: int
+    id: Optional[int] = None
     name: Annotated[
         str,
         Field(
@@ -14,13 +14,10 @@ class Item(BaseModel):
         ),
     ]
     status: int
-    comment: Optional[
-        Annotated[
-            str,
-            Field(
-                max_length=100, description="Comment should be 100 characters or less."
-            ),
-        ]
+    comment: Annotated[
+        Optional[str],
+        Field(max_length=100, description="Comment should be 100 characters or less."),
     ] = None
+
     category: int
-    updated_on: datetime
+    updated_on: Optional[datetime] = None

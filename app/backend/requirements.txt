@@ -3,4 +3,5 @@ dotenv==0.9.9
 fastapi
 pyodbc
 sqlalchemy
+tzdata==2025.2
 uvicorn

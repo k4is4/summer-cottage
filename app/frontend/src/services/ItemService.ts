@@ -12,6 +12,7 @@ class ItemService {
 	}
 
 	async addItem(item: ItemFormData): Promise<Item> {
+		console.log(item)
 		return apiClient
 			.post<Item>("/items", item)
 			.then((response: AxiosResponse<Item>) => response.data)
