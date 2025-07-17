@@ -1,6 +1,7 @@
+from zoneinfo import ZoneInfo
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from sql.models import CalendarEventModel
 from schemas.calendar_event import CalendarEvent
@@ -26,8 +27,8 @@ def get_calendar_event(db: Session, event_id: int):
 
 
 def add_calendar_event(db: Session, event_data: CalendarEvent):
-    new_event = CalendarEventModel(**event_data.dict())
-    new_event.updated_on = datetime.utcnow() + timedelta(hours=3)
+    new_event = CalendarEventModel(**event_data.model_dump(exclude_unset=True))
+    new_event.updated_on = datetime.now(ZoneInfo("Europe/Helsinki"))
 
     db.add(new_event)
     db.commit()
@@ -50,9 +51,9 @@ def update_calendar_event(db: Session, event_id: int, event_data: CalendarEvent)
             status_code=404, detail=f"Calendar event {event_id} not found"
         )
 
-    for attr, value in event_data.dict().items():
+    for attr, value in event_data.model_dump(exclude_unset=True).items():
         setattr(event, attr, value)
-    event.updated_on = datetime.utcnow() + timedelta(hours=3)
+    event.updated_on = datetime.now(ZoneInfo("Europe/Helsinki"))
 
     db.commit()
     db.refresh(event)

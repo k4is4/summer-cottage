@@ -19,8 +19,8 @@ class CalendarEventModel(Base):
     __tablename__ = "calendar_events"
 
     id = Column(Integer, primary_key=True, index=True)
-    start_date = Column(DateTime(timezone=True), nullable=False)
-    end_date = Column(DateTime(timezone=True), nullable=False)
+    start_date = Column(DateTime, nullable=False)
+    end_date = Column(DateTime, nullable=False)
     note = Column(String(200), nullable=False)
     color = Column(Integer, nullable=False)
-    updated_on = Column(DateTime(timezone=True), nullable=False)
+    updated_on = Column(DateTime, nullable=False)
