@@ -1,0 +1,60 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# VS Code settings
+.vscode/
+
+# Pytest cache
+.pytest_cache/
+
+# MyPy cache
+.mypy_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Logs
+*.log
+
+# Jupyter Notebooks (if applicable)
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Docker-related (optional, if using Docker)
+**/.dockerignore
+docker-compose.override.yml
+
+# Pydantic models cache (if used with compiled models)
+pydantic_schema_cache/
+
+# Database files (if using SQLite locally)
+*.sqlite3
+*.db
+
+# Static frontend files
+dist/
