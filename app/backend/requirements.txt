@@ -1,7 +1,8 @@
 azure-identity==1.23.1
+gunicorn==23.0.0
 dotenv==0.9.9
-fastapi
-pyodbc
-sqlalchemy
+fastapi==0.116.1
+pyodbc==5.2.0
+sqlalchemy==2.0.41
 tzdata==2025.2
-uvicorn
+uvicorn==0.35.0

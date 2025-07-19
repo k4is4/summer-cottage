@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, Annotated
 from datetime import datetime
 
@@ -20,4 +20,6 @@ class Item(BaseModel):
     ] = None
 
     category: int
-    updated_on: Optional[datetime] = None
+    updated_on: Optional[datetime] = Field(alias="updatedOn")
+
+    model_config = ConfigDict(validate_by_name=True, validate_by_alias=True)
