@@ -148,7 +148,7 @@ const CalendarComponent: React.FC = () => {
 			<div className="container">
 				<p>
 					Muokattu:{" "}
-					{lastUpdated ? moment(lastUpdated).format("DD/MM/YYYY HH:mm") : "?"}
+					{lastUpdated ? moment(lastUpdated).format("D.M.YYYY HH:mm") : "?"}
 				</p>
 			</div>
 		</div>

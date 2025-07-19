@@ -1,11 +1,13 @@
-$theme-colors: (
-	"primary": #006e33,
-	"warning": rgb(246, 162, 5),
-	"danger": rgba(173, 5, 5, 0.753),
+@use "sass:map";
+
+@use "bootstrap" with (
+  $theme-colors: (
+    "primary": #006e33,
+    "warning": rgb(246, 162, 5),
+    "danger": rgba(173, 5, 5, 0.753),
+  ),
+  $nav-link-color: #006e33,
+  $nav-link-hover-color: rgb(3, 195, 29),
 );
 
-$nav-link-color: #006e33;
-$nav-link-hover-color: rgb(3, 195, 29);
-
-// Import Bootstrap and its default variables
-@import "~bootstrap/scss/bootstrap.scss";
+@use "bootstrap" as bs;

@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import Banner from "./components/banner";
 import ItemList from "./components/inventory/itemList";
 import Navigation from "./components/navigation";
