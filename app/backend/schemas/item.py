@@ -20,6 +20,6 @@ class Item(BaseModel):
     ] = None
 
     category: int
-    updated_on: Optional[datetime] = Field(alias="updatedOn")
+    updated_on: Optional[datetime] = Field(default=None, alias="updatedOn")
 
     model_config = ConfigDict(validate_by_name=True, validate_by_alias=True)
