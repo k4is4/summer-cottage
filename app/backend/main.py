@@ -1,7 +1,6 @@
 import os
 from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
@@ -10,11 +9,7 @@ from typing import List
 from crud import calendar_event_crud, item_crud
 from schemas.item import Item
 from schemas.calendar_event import CalendarEvent
-from sql.database import SessionLocal, engine  # Make sure to define DB connection here
-from sql.models import Base
-
-
-Base.metadata.create_all(bind=engine)
+from sql.database import get_db
 
 app = FastAPI()
 
@@ -26,15 +21,6 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         status_code=422,
         content={"detail": exc.errors(), "body": exc.body},
     )
-
-
-# Database dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 # Item routes
