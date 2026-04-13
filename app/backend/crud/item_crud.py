@@ -1,6 +1,6 @@
 from zoneinfo import ZoneInfo
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
+from shared.exceptions import HTTPException
 from datetime import datetime, timedelta
 
 from sql.models import ItemModel

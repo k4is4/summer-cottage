@@ -2,7 +2,7 @@ import os
 import struct
 import urllib
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 from azure.identity import DefaultAzureCredential
 
 from dotenv import load_dotenv
@@ -13,10 +13,17 @@ load_dotenv()
 server = os.getenv("AZURE_SQL_SERVER")
 database = os.getenv("AZURE_SQL_DATABASE")
 
+_credential = DefaultAzureCredential()
+_engine = None
+_SessionLocal = None
 
-def get_engine():
-    credential = DefaultAzureCredential()
-    token = credential.get_token("https://database.windows.net/.default").token
+
+def _get_engine():
+    global _engine, _SessionLocal
+    if _engine is not None:
+        return _engine
+
+    token = _credential.get_token("https://database.windows.net/.default").token
     token_bytes = token.encode("UTF-16-LE")
     token_struct = struct.pack(f"<I{len(token_bytes)}s", len(token_bytes), token_bytes)
 
@@ -29,18 +36,18 @@ def get_engine():
     )
 
     params = urllib.parse.quote(conn_str)
-    engine = create_engine(
+    _engine = create_engine(
         "mssql+pyodbc:///?odbc_connect={0}".format(params),
         connect_args={"attrs_before": {1256: token_struct}},
+        pool_pre_ping=True,
     )
-
-    return engine
+    _SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=_engine)
+    return _engine
 
 
 def get_db():
-    engine = get_engine()
-    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-    db = SessionLocal()
+    _get_engine()
+    db: Session = _SessionLocal()
     try:
         yield db
     except Exception as e:
@@ -48,4 +55,3 @@ def get_db():
         raise
     finally:
         db.close()
-        engine.dispose()

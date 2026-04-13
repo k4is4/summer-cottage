@@ -13,4 +13,4 @@ class CalendarEvent(BaseModel):
     color: int
     updated_on: Optional[datetime] = Field(default=None, alias="updatedOn")
 
-    model_config = ConfigDict(validate_by_name=True, validate_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, validate_by_alias=True, from_attributes=True)

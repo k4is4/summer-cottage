@@ -1,6 +1,9 @@
-- Startup command locally: uvicorn main:app --reload
-- Startup command in Azure App Service Web App: "gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app"
+FUNCTION APP ENVIRONMENT VARIABLES:
 
-- ENVIRONMENT VARIABLES:
-  AZURE_SQL_SERVER=<servername>.database.windows.net
-  AZURE_SQL_DATABASE=<databasename>
+  - AZURE_SQL_SERVER=servername.database.windows.net
+
+  - AZURE_SQL_DATABASE=databasename
+
+FRONTEND .env.production:
+
+  - VITE_API_BASE_URL=https://functionappname.azurewebsites.net/api

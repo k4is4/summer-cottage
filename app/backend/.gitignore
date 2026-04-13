@@ -12,6 +12,9 @@ env/
 .env
 .env.*
 
+# Azure Functions local settings (contains env vars, never commit)
+local.settings.json
+
 # VS Code settings
 .vscode/
 

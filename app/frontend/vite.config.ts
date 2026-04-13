@@ -8,7 +8,7 @@ export default defineConfig({
         preserveSymlinks: true
     },
     build: {
-        outDir: "../backend/dist",
+        outDir: "dist",
         emptyOutDir: true,
         sourcemap: true,
         rollupOptions: {
@@ -28,7 +28,7 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            "/api": "http://localhost:8000",
+            "/api": "http://localhost:7071",
         }
     }
 });
