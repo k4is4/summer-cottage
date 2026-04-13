@@ -1,7 +1,10 @@
+import logging
 import os
 import struct
+import time
 import urllib
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import sessionmaker, Session
 from azure.identity import DefaultAzureCredential
 
@@ -45,13 +48,37 @@ def _get_engine():
     return _engine
 
 
-def get_db():
+_DB_WAKEUP_RETRIES = 5
+_DB_WAKEUP_DELAY = 10  # seconds between retries
+
+
+def _get_db_session() -> Session:
+    """Create a session, retrying if the database is waking up from sleep."""
     _get_engine()
-    db: Session = _SessionLocal()
+    last_exc: Exception = None
+    for attempt in range(_DB_WAKEUP_RETRIES):
+        db: Session = _SessionLocal()
+        try:
+            db.execute(text("SELECT 1"))
+            return db
+        except OperationalError as e:
+            db.close()
+            last_exc = e
+            if attempt < _DB_WAKEUP_RETRIES - 1:
+                logging.warning(
+                    "Database not ready (attempt %d/%d), retrying in %ds...",
+                    attempt + 1,
+                    _DB_WAKEUP_RETRIES,
+                    _DB_WAKEUP_DELAY,
+                )
+                time.sleep(_DB_WAKEUP_DELAY)
+    logging.error("Database unavailable after %d attempts.", _DB_WAKEUP_RETRIES)
+    raise last_exc
+
+
+def get_db():
+    db = _get_db_session()
     try:
         yield db
-    except Exception as e:
-        print(f"Database connection error: {e}")
-        raise
     finally:
         db.close()
