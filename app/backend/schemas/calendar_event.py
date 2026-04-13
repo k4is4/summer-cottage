@@ -11,6 +11,7 @@ class CalendarEvent(BaseModel):
         str, Field(max_length=200, description="Note should be 200 characters or less.")
     ]
     color: int
+    car_needed: bool = Field(default=False, alias="carNeeded")
     updated_on: Optional[datetime] = Field(default=None, alias="updatedOn")
 
     model_config = ConfigDict(validate_by_name=True, validate_by_alias=True, from_attributes=True)

@@ -31,6 +31,7 @@ const EditModal: React.FC<EditModalProps> = ({
 		endDate: moment(event.endDate).startOf("day").add(12, "hours").toDate(),
 		note: event.note,
 		color: event.color,
+		carNeeded: event.carNeeded,
 	});
 	const { dateError, commentError, formSubmitted, setFormSubmitted } =
 		useCalendarValidation(formData.startDate, formData.endDate, formData.note);
@@ -44,6 +45,7 @@ const EditModal: React.FC<EditModalProps> = ({
 			endDate: moment(event.endDate).startOf("day").add(12, "hours").toDate(),
 			note: event.note,
 			color: event.color,
+			carNeeded: event.carNeeded,
 		});
 	}, [event]);
 
@@ -155,6 +157,22 @@ const EditModal: React.FC<EditModalProps> = ({
 							Vihreä - Saa tulla mukaan
 						</option>
 					</select>
+				</div>
+				<div className="form-group">
+					<div className="form-check">
+						<input
+							id="carNeeded"
+							type="checkbox"
+							className="form-check-input"
+							checked={formData.carNeeded}
+							onChange={(e) =>
+								setFormData({ ...formData, carNeeded: e.target.checked })
+							}
+						/>
+						<label className="form-check-label" htmlFor="carNeeded">
+							🚗 Tarvitaan auto
+						</label>
+					</div>
 				</div>
 			</Modal.Body>
 			<Modal.Footer>

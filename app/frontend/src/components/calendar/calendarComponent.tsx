@@ -17,6 +17,24 @@ moment.tz.setDefault("Europe/Helsinki");
 const localizer = momentLocalizer(moment);
 localizer.segmentOffset = 0;
 
+const EventComponent: React.FC<{ event: CalendarEvent }> = ({ event }) => (
+	<div>
+		{event.carNeeded && (
+			<span
+				style={{
+					backgroundColor: "rgba(255,255,255,0.85)",
+					borderRadius: "3px",
+					padding: "0 2px",
+					marginRight: "3px",
+				}}
+			>
+				🚗
+			</span>
+		)}
+		{event.note}
+	</div>
+);
+
 const CalendarComponent: React.FC = () => {
 	const [events, setEvents] = useState<CalendarEvent[]>([]);
 	const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
@@ -119,7 +137,7 @@ const CalendarComponent: React.FC = () => {
 				selectable={true}
 				onSelectSlot={handleSlotSelection}
 				onSelectEvent={handleEventSelection}
-				components={{ toolbar: customToolbar }}
+				components={{ toolbar: customToolbar, event: EventComponent }}
 			/>
 			{error && (
 				<ErrorModal errorMessage={error} onClose={() => setError(null)} />

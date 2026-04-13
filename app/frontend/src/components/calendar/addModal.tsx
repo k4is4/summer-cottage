@@ -30,6 +30,7 @@ const AddModal: React.FC<AddModalProps> = ({
 		endDate: moment(slotInfo.end).startOf("day").add(12, "hours").toDate(),
 		note: "",
 		color: CalendarEventColor.green,
+		carNeeded: false,
 	});
 	const { dateError, commentError, formSubmitted, setFormSubmitted } =
 		useCalendarValidation(formData.startDate, formData.endDate, formData.note);
@@ -131,6 +132,22 @@ const AddModal: React.FC<AddModalProps> = ({
 							Vihreä - Saa tulla mukaan
 						</option>
 					</select>
+				</div>
+				<div className="form-group">
+					<div className="form-check">
+						<input
+							id="carNeeded"
+							type="checkbox"
+							className="form-check-input"
+							checked={formData.carNeeded}
+							onChange={(e) =>
+								setFormData({ ...formData, carNeeded: e.target.checked })
+							}
+						/>
+						<label className="form-check-label" htmlFor="carNeeded">
+							🚗 Tarvitaan auto
+						</label>
+					</div>
 				</div>
 			</Modal.Body>
 			<Modal.Footer>

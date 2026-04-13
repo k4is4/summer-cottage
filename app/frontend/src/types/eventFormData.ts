@@ -5,4 +5,5 @@ export interface EventFormData {
 	startDate: Date;
 	endDate: Date;
 	color: CalendarEventColor;
+	carNeeded: boolean;
 }

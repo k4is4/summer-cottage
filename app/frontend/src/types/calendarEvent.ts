@@ -6,5 +6,6 @@ export interface CalendarEvent {
 	startDate: Date;
 	endDate: Date;
 	color: CalendarEventColor;
+	carNeeded: boolean;
 	updatedOn: Date;
 }

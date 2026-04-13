@@ -23,4 +23,5 @@ class CalendarEventModel(Base):
     end_date = Column(DateTime, nullable=False)
     note = Column(String(200), nullable=False)
     color = Column(Integer, nullable=False)
+    car_needed = Column(Integer, nullable=False, default=0)
     updated_on = Column(DateTime, nullable=False)
